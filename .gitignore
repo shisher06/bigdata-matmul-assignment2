@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Matrices de entrada: se regeneran con src/python/datagen.py (los manifest sí se versionan)
+data/*.bin
+data_sparse/*.bin
+
+# Binario de C: se regenera con scripts/build.py (build_info.json sí se versiona)
+build/c/
+
+# Intermedio del PDF del informe
+informe/informe.html

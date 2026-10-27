@@ -1,0 +1,98 @@
+{
+  "timestamp_utc": "2026-10-27T16:26:32+00:00",
+  "os": {
+    "pretty": "Windows 11 Home 26H2 (build 26300.9711)",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "system": "Windows",
+    "release": "10",
+    "machine": "AMD64"
+  },
+  "cpu": {
+    "model": "AMD Ryzen 7 4800H with Radeon Graphics",
+    "cores_physical": 8,
+    "cores_logical": 16
+  },
+  "ram_total_bytes": 16505966592,
+  "toolchain": {
+    "gcc": "gcc.EXE (GCC) 11.2.0 (x86_64-w64-mingw32)",
+    "c_flags": {
+      "O2": "-std=c11 -Wall -Wextra -ffp-contract=off -O2"
+    }
+  },
+  "python": {
+    "version": "3.11.9",
+    "implementation": "CPython",
+    "compiler": "MSC v.1938 64 bit (AMD64)",
+    "build": [
+      "tags/v3.11.9:de54cf5",
+      "Apr  2 2024 10:12:12"
+    ],
+    "executable": "C:\\Users\\guill\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+    "gil_enabled": null
+  },
+  "libraries": {
+    "numpy (solo verificación y análisis)": "2.4.6",
+    "matplotlib (solo gráficas)": "3.11.2",
+    "psutil (opcional)": "7.2.2"
+  },
+  "timer": {
+    "function": "time.perf_counter_ns",
+    "monotonic": true,
+    "resolution_s": 1e-07,
+    "implementation": "QueryPerformanceCounter()"
+  },
+  "thread_env": {
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "NUMEXPR_NUM_THREADS": null,
+    "VECLIB_MAXIMUM_THREADS": null
+  },
+  "power": {
+    "battery_percent": 100,
+    "power_plugged": true,
+    "cpu_freq_mhz_current": 2900.0,
+    "cpu_freq_mhz_max": 2900.0
+  },
+  "notes": [
+    "Todos los kernels (ijk, ikj, blocked, csr) son secuenciales: un solo hilo (threads = 1); el número de hilos del SO de cada proceso queda en os_threads_max.",
+    "El runner fija OMP/OPENBLAS/MKL_NUM_THREADS=1 en los procesos hijo; NumPy solo se usa para verificar, fuera del cronómetro."
+  ],
+  "campaign": {
+    "configs": {
+      "csr": {
+        "method": "csr",
+        "block": 0,
+        "cmd": [
+          "C:\\Users\\guill\\OneDrive - Universidad de Las Palmas de Gran Canaria\\UNI\\BD\\Ind Assi\\practica2\\build\\c\\matmul.exe",
+          "--method",
+          "csr"
+        ]
+      },
+      "blocked": {
+        "method": "blocked",
+        "block": 64,
+        "cmd": [
+          "C:\\Users\\guill\\OneDrive - Universidad de Las Palmas de Gran Canaria\\UNI\\BD\\Ind Assi\\practica2\\build\\c\\matmul.exe",
+          "--method",
+          "blocked",
+          "--block",
+          "64"
+        ]
+      }
+    },
+    "sizes": [
+      1000,
+      2000
+    ],
+    "densities": [
+      60.0,
+      70.0,
+      85.0,
+      100.0
+    ],
+    "reps": 5,
+    "timeout_s": 300.0,
+    "mem_budget_mb": 4096
+  }
+}

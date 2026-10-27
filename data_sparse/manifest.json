@@ -1,0 +1,627 @@
+{
+  "generator": "CPython random.Random(seed): por celda u = random(); valor = 1 - random() si u < densidad, si no 0.0 (posiciones uniformes e independientes, valores en (0, 1])",
+  "dtype": "float64 little-endian",
+  "layout": "row-major, sin cabecera (8*n*n bytes); los ceros se guardan (formato denso)",
+  "value_range": "(0, 1] en los no-ceros",
+  "nonzero_distribution": "uniforme: cada celda es no-cero de forma independiente con probabilidad = densidad",
+  "base_seed": 2026,
+  "seed_rule": "A: (base_seed*1000003 + 2n)*1000000 + 2*round(1000*pct) ; B: A + 1",
+  "files": {
+    "1000_d0.1": {
+      "A": {
+        "file": "A_1000_d0.1.bin",
+        "n": 1000,
+        "density_pct": 0.1,
+        "seed": 2026008078000200,
+        "nnz": 969,
+        "actual_density_pct": 0.0969,
+        "bytes": 8000000,
+        "sha256": "d79d9afb982c0b64b4bef960b5455941b24c45066adcd5f0b35f082f7dfc9058"
+      },
+      "B": {
+        "file": "B_1000_d0.1.bin",
+        "n": 1000,
+        "density_pct": 0.1,
+        "seed": 2026008078000201,
+        "nnz": 1057,
+        "actual_density_pct": 0.1057,
+        "bytes": 8000000,
+        "sha256": "1d1e49adc61de39478d2f5f1068caab0d628f813534aceac875830e61db76e0a"
+      }
+    },
+    "1000_d0.5": {
+      "A": {
+        "file": "A_1000_d0.5.bin",
+        "n": 1000,
+        "density_pct": 0.5,
+        "seed": 2026008078001000,
+        "nnz": 4957,
+        "actual_density_pct": 0.4957,
+        "bytes": 8000000,
+        "sha256": "5945ef40085de36d8cd24492e33cc6edae963ea4a622b48e62b1d655fd6dd141"
+      },
+      "B": {
+        "file": "B_1000_d0.5.bin",
+        "n": 1000,
+        "density_pct": 0.5,
+        "seed": 2026008078001001,
+        "nnz": 4864,
+        "actual_density_pct": 0.4864,
+        "bytes": 8000000,
+        "sha256": "620ea911b6ff58c814592abeeee6914e4ac967d2b0f08ff9903ab064c76e8827"
+      }
+    },
+    "1000_d1": {
+      "A": {
+        "file": "A_1000_d1.bin",
+        "n": 1000,
+        "density_pct": 1.0,
+        "seed": 2026008078002000,
+        "nnz": 9964,
+        "actual_density_pct": 0.9964,
+        "bytes": 8000000,
+        "sha256": "da30f81a17ea98bf073b02dcacf87d2ed0a86a6c1b9a1cb59f37b2e5bd2af72c"
+      },
+      "B": {
+        "file": "B_1000_d1.bin",
+        "n": 1000,
+        "density_pct": 1.0,
+        "seed": 2026008078002001,
+        "nnz": 9993,
+        "actual_density_pct": 0.9993,
+        "bytes": 8000000,
+        "sha256": "78fabd66a85f433e1ec7117e7ce33d9f5e81dd3a32052b34df70e6b49ca9f1fc"
+      }
+    },
+    "1000_d2": {
+      "A": {
+        "file": "A_1000_d2.bin",
+        "n": 1000,
+        "density_pct": 2.0,
+        "seed": 2026008078004000,
+        "nnz": 19707,
+        "actual_density_pct": 1.9707,
+        "bytes": 8000000,
+        "sha256": "f1260da4e4d145ea8e3cac1ce1f9c02d985ca5cbc6fbc27404dc0889231afbe6"
+      },
+      "B": {
+        "file": "B_1000_d2.bin",
+        "n": 1000,
+        "density_pct": 2.0,
+        "seed": 2026008078004001,
+        "nnz": 20196,
+        "actual_density_pct": 2.0196,
+        "bytes": 8000000,
+        "sha256": "0e68a5f7bdc4b3b2b84e27d01d73ee9ac8536cea69208071923216d67c5b3843"
+      }
+    },
+    "1000_d5": {
+      "A": {
+        "file": "A_1000_d5.bin",
+        "n": 1000,
+        "density_pct": 5.0,
+        "seed": 2026008078010000,
+        "nnz": 49850,
+        "actual_density_pct": 4.985,
+        "bytes": 8000000,
+        "sha256": "a778dd2a00ee479a58394907aa863b9ffb01aebc3ae64b8f8145e15ec27d9225"
+      },
+      "B": {
+        "file": "B_1000_d5.bin",
+        "n": 1000,
+        "density_pct": 5.0,
+        "seed": 2026008078010001,
+        "nnz": 50218,
+        "actual_density_pct": 5.0218,
+        "bytes": 8000000,
+        "sha256": "c1b78a27e6c6ba448c1cc7171a618c64eceb70cce92dd64d50576c829a0d4557"
+      }
+    },
+    "1000_d10": {
+      "A": {
+        "file": "A_1000_d10.bin",
+        "n": 1000,
+        "density_pct": 10.0,
+        "seed": 2026008078020000,
+        "nnz": 99757,
+        "actual_density_pct": 9.9757,
+        "bytes": 8000000,
+        "sha256": "d83135d2f363fe12f6a23bebcb3cd2d4c8a0791221141c3274ee75ad94a6239f"
+      },
+      "B": {
+        "file": "B_1000_d10.bin",
+        "n": 1000,
+        "density_pct": 10.0,
+        "seed": 2026008078020001,
+        "nnz": 99981,
+        "actual_density_pct": 9.9981,
+        "bytes": 8000000,
+        "sha256": "1f162e0c111788662f9f298a47993c5cf26551b53a2331f67e27e9da93583301"
+      }
+    },
+    "1000_d20": {
+      "A": {
+        "file": "A_1000_d20.bin",
+        "n": 1000,
+        "density_pct": 20.0,
+        "seed": 2026008078040000,
+        "nnz": 199650,
+        "actual_density_pct": 19.965,
+        "bytes": 8000000,
+        "sha256": "a6be3db35617acd0d390c5b84366219b21dde7297c8a89657c9dcbd2fadeabb4"
+      },
+      "B": {
+        "file": "B_1000_d20.bin",
+        "n": 1000,
+        "density_pct": 20.0,
+        "seed": 2026008078040001,
+        "nnz": 200083,
+        "actual_density_pct": 20.0083,
+        "bytes": 8000000,
+        "sha256": "c135fb85fa28da646f769ad781a4c57bf79a12961ad2b1c359fb293839f0b18e"
+      }
+    },
+    "1000_d30": {
+      "A": {
+        "file": "A_1000_d30.bin",
+        "n": 1000,
+        "density_pct": 30.0,
+        "seed": 2026008078060000,
+        "nnz": 299945,
+        "actual_density_pct": 29.9945,
+        "bytes": 8000000,
+        "sha256": "1b7cf6bc3b9bf1b72c14df18e0b55eab954c491c66b546bd3f2023d433ed1c5b"
+      },
+      "B": {
+        "file": "B_1000_d30.bin",
+        "n": 1000,
+        "density_pct": 30.0,
+        "seed": 2026008078060001,
+        "nnz": 299614,
+        "actual_density_pct": 29.9614,
+        "bytes": 8000000,
+        "sha256": "833a0bf578c7274177c36c983f7cada9188a78c5036bfd97102e8b5abad44d3c"
+      }
+    },
+    "1000_d50": {
+      "A": {
+        "file": "A_1000_d50.bin",
+        "n": 1000,
+        "density_pct": 50.0,
+        "seed": 2026008078100000,
+        "nnz": 500386,
+        "actual_density_pct": 50.0386,
+        "bytes": 8000000,
+        "sha256": "9a3f88b7597d4b9989d6daa5924e6b5cda7413c8e3158e34715f9ac4706e7ec6"
+      },
+      "B": {
+        "file": "B_1000_d50.bin",
+        "n": 1000,
+        "density_pct": 50.0,
+        "seed": 2026008078100001,
+        "nnz": 499445,
+        "actual_density_pct": 49.9445,
+        "bytes": 8000000,
+        "sha256": "7992fb12895a29a55830767365fa26605051c88214c297712f1728a2b640fb0c"
+      }
+    },
+    "1000_d60": {
+      "A": {
+        "file": "A_1000_d60.bin",
+        "n": 1000,
+        "density_pct": 60.0,
+        "seed": 2026008078120000,
+        "nnz": 600284,
+        "actual_density_pct": 60.0284,
+        "bytes": 8000000,
+        "sha256": "5caa147b457b779f81565c667c212cd66ff60c911054880531f5a694914fc3b0"
+      },
+      "B": {
+        "file": "B_1000_d60.bin",
+        "n": 1000,
+        "density_pct": 60.0,
+        "seed": 2026008078120001,
+        "nnz": 599978,
+        "actual_density_pct": 59.9978,
+        "bytes": 8000000,
+        "sha256": "025bebee77662052f9bc8a10f25e74465f9ef49cc3432a0b83fc738c26186169"
+      }
+    },
+    "1000_d70": {
+      "A": {
+        "file": "A_1000_d70.bin",
+        "n": 1000,
+        "density_pct": 70.0,
+        "seed": 2026008078140000,
+        "nnz": 699457,
+        "actual_density_pct": 69.9457,
+        "bytes": 8000000,
+        "sha256": "4d2b5c271cbd825d8d2bd15fdb23345268a4bb661085e8147557fdd1642adc3b"
+      },
+      "B": {
+        "file": "B_1000_d70.bin",
+        "n": 1000,
+        "density_pct": 70.0,
+        "seed": 2026008078140001,
+        "nnz": 700151,
+        "actual_density_pct": 70.0151,
+        "bytes": 8000000,
+        "sha256": "6e6565382d0628bf7639a9c8e084cb18dc324290e68a22551d71dcfbb50f2eac"
+      }
+    },
+    "1000_d85": {
+      "A": {
+        "file": "A_1000_d85.bin",
+        "n": 1000,
+        "density_pct": 85.0,
+        "seed": 2026008078170000,
+        "nnz": 850146,
+        "actual_density_pct": 85.0146,
+        "bytes": 8000000,
+        "sha256": "3c845b2f11d99d7773aebe6e27d69eac2235fc4d597856055c586e32a27f02b0"
+      },
+      "B": {
+        "file": "B_1000_d85.bin",
+        "n": 1000,
+        "density_pct": 85.0,
+        "seed": 2026008078170001,
+        "nnz": 849710,
+        "actual_density_pct": 84.971,
+        "bytes": 8000000,
+        "sha256": "1b1fd94cc18b74fac6a931c1114e9c90a40134617715d9225d66484e8c95978d"
+      }
+    },
+    "1000_d100": {
+      "A": {
+        "file": "A_1000_d100.bin",
+        "n": 1000,
+        "density_pct": 100.0,
+        "seed": 2026008078200000,
+        "nnz": 1000000,
+        "actual_density_pct": 100.0,
+        "bytes": 8000000,
+        "sha256": "662ab3411120432864236079c0cd3b92f405644a354d15058e72380c1e4097ba"
+      },
+      "B": {
+        "file": "B_1000_d100.bin",
+        "n": 1000,
+        "density_pct": 100.0,
+        "seed": 2026008078200001,
+        "nnz": 1000000,
+        "actual_density_pct": 100.0,
+        "bytes": 8000000,
+        "sha256": "dea450d8e2bb57e4d088f6642e4d5732864bb970bf40e527408bd7199a4cb60f"
+      }
+    },
+    "2000_d0.1": {
+      "A": {
+        "file": "A_2000_d0.1.bin",
+        "n": 2000,
+        "density_pct": 0.1,
+        "seed": 2026010078000200,
+        "nnz": 4035,
+        "actual_density_pct": 0.100875,
+        "bytes": 32000000,
+        "sha256": "ab315abd43060825ee4bb0423c71136a07dcee4688cddb18a9f784bde1aa2c17"
+      },
+      "B": {
+        "file": "B_2000_d0.1.bin",
+        "n": 2000,
+        "density_pct": 0.1,
+        "seed": 2026010078000201,
+        "nnz": 4016,
+        "actual_density_pct": 0.1004,
+        "bytes": 32000000,
+        "sha256": "401cfb05f4d4ba3523e2cd4c4b55adb0ae401bbb16c45273392bc231bbe5ea6f"
+      }
+    },
+    "2000_d0.5": {
+      "A": {
+        "file": "A_2000_d0.5.bin",
+        "n": 2000,
+        "density_pct": 0.5,
+        "seed": 2026010078001000,
+        "nnz": 19654,
+        "actual_density_pct": 0.49135,
+        "bytes": 32000000,
+        "sha256": "83add2aa046d0f9a63f1f2d957afd0c00c6bbf9dddb634ed877d2bcfc635716b"
+      },
+      "B": {
+        "file": "B_2000_d0.5.bin",
+        "n": 2000,
+        "density_pct": 0.5,
+        "seed": 2026010078001001,
+        "nnz": 19739,
+        "actual_density_pct": 0.493475,
+        "bytes": 32000000,
+        "sha256": "bae50e8ccd904607374617839fbb88174ed733d00003b3ad9c822f4ce1519fd3"
+      }
+    },
+    "2000_d1": {
+      "A": {
+        "file": "A_2000_d1.bin",
+        "n": 2000,
+        "density_pct": 1.0,
+        "seed": 2026010078002000,
+        "nnz": 39982,
+        "actual_density_pct": 0.99955,
+        "bytes": 32000000,
+        "sha256": "ff649bfc62078140e4608b9b212ce9df70bf4dc0557a1689f69ca0052bc7d21c"
+      },
+      "B": {
+        "file": "B_2000_d1.bin",
+        "n": 2000,
+        "density_pct": 1.0,
+        "seed": 2026010078002001,
+        "nnz": 39896,
+        "actual_density_pct": 0.9974,
+        "bytes": 32000000,
+        "sha256": "0433e2e3bef6b22cfa5bbc2b04d73b5f1b8f295467a0f94d5ae78c564a1e1015"
+      }
+    },
+    "2000_d2": {
+      "A": {
+        "file": "A_2000_d2.bin",
+        "n": 2000,
+        "density_pct": 2.0,
+        "seed": 2026010078004000,
+        "nnz": 79890,
+        "actual_density_pct": 1.99725,
+        "bytes": 32000000,
+        "sha256": "272fed665edb09693408513abea9ccc0239c8bf15f2b47c78709d800a2753e10"
+      },
+      "B": {
+        "file": "B_2000_d2.bin",
+        "n": 2000,
+        "density_pct": 2.0,
+        "seed": 2026010078004001,
+        "nnz": 80061,
+        "actual_density_pct": 2.001525,
+        "bytes": 32000000,
+        "sha256": "30aaf3b11e9f9c7229ecc00b42176ed348647355493df12557b3af58de4df12b"
+      }
+    },
+    "2000_d5": {
+      "A": {
+        "file": "A_2000_d5.bin",
+        "n": 2000,
+        "density_pct": 5.0,
+        "seed": 2026010078010000,
+        "nnz": 200753,
+        "actual_density_pct": 5.018825,
+        "bytes": 32000000,
+        "sha256": "409f843db4a6018dbeb7b7ada8c561aeea2e062c95d0a0e6757645b71109fb64"
+      },
+      "B": {
+        "file": "B_2000_d5.bin",
+        "n": 2000,
+        "density_pct": 5.0,
+        "seed": 2026010078010001,
+        "nnz": 200446,
+        "actual_density_pct": 5.01115,
+        "bytes": 32000000,
+        "sha256": "ba63b34181fc0cf3cc9e8018020b72759ca870ed0e8e35ba88c177440d4317d2"
+      }
+    },
+    "2000_d10": {
+      "A": {
+        "file": "A_2000_d10.bin",
+        "n": 2000,
+        "density_pct": 10.0,
+        "seed": 2026010078020000,
+        "nnz": 400039,
+        "actual_density_pct": 10.000975,
+        "bytes": 32000000,
+        "sha256": "11b8b27aa4235a2e32bdb9423abdf8905408cf858570b8a4eb12c1d51c1afbf3"
+      },
+      "B": {
+        "file": "B_2000_d10.bin",
+        "n": 2000,
+        "density_pct": 10.0,
+        "seed": 2026010078020001,
+        "nnz": 400391,
+        "actual_density_pct": 10.009775,
+        "bytes": 32000000,
+        "sha256": "f9d07055d4a0af1eae9758be7245369d21279691a268f895b362034bdd9b7da6"
+      }
+    },
+    "2000_d20": {
+      "A": {
+        "file": "A_2000_d20.bin",
+        "n": 2000,
+        "density_pct": 20.0,
+        "seed": 2026010078040000,
+        "nnz": 800612,
+        "actual_density_pct": 20.0153,
+        "bytes": 32000000,
+        "sha256": "a5fc6ad1963ddb6d12ad6ce59c44715cad05638164311941e68d8bd241803627"
+      },
+      "B": {
+        "file": "B_2000_d20.bin",
+        "n": 2000,
+        "density_pct": 20.0,
+        "seed": 2026010078040001,
+        "nnz": 801029,
+        "actual_density_pct": 20.025725,
+        "bytes": 32000000,
+        "sha256": "94dbc32c7d544de4a36681a6136199b694a229e83080f0514fd8321a6c3e3b49"
+      }
+    },
+    "2000_d30": {
+      "A": {
+        "file": "A_2000_d30.bin",
+        "n": 2000,
+        "density_pct": 30.0,
+        "seed": 2026010078060000,
+        "nnz": 1200871,
+        "actual_density_pct": 30.021775,
+        "bytes": 32000000,
+        "sha256": "565cfa5dfe72ded0406dd7ea95fe8dc328a745aab70f654ccc1b2a6344f793e4"
+      },
+      "B": {
+        "file": "B_2000_d30.bin",
+        "n": 2000,
+        "density_pct": 30.0,
+        "seed": 2026010078060001,
+        "nnz": 1201752,
+        "actual_density_pct": 30.0438,
+        "bytes": 32000000,
+        "sha256": "dd221b995cfe43db7ec2b5b94fa16b7fde8bbe044258545f616539a93fc6f2df"
+      }
+    },
+    "2000_d50": {
+      "A": {
+        "file": "A_2000_d50.bin",
+        "n": 2000,
+        "density_pct": 50.0,
+        "seed": 2026010078100000,
+        "nnz": 1999895,
+        "actual_density_pct": 49.997375,
+        "bytes": 32000000,
+        "sha256": "7f07a832db51569bbfb5c102d477aa31b6c7e26fffe43d58fd7253c87f040905"
+      },
+      "B": {
+        "file": "B_2000_d50.bin",
+        "n": 2000,
+        "density_pct": 50.0,
+        "seed": 2026010078100001,
+        "nnz": 1998576,
+        "actual_density_pct": 49.9644,
+        "bytes": 32000000,
+        "sha256": "52282fe8f423f520c2c23818a3cd169cc656674062a1593dac9b1d695e231855"
+      }
+    },
+    "2000_d60": {
+      "A": {
+        "file": "A_2000_d60.bin",
+        "n": 2000,
+        "density_pct": 60.0,
+        "seed": 2026010078120000,
+        "nnz": 2399891,
+        "actual_density_pct": 59.997275,
+        "bytes": 32000000,
+        "sha256": "8e457146b64dead0e51c83d82f443c85494444b4833d5306c93fdf27a8b481f3"
+      },
+      "B": {
+        "file": "B_2000_d60.bin",
+        "n": 2000,
+        "density_pct": 60.0,
+        "seed": 2026010078120001,
+        "nnz": 2399261,
+        "actual_density_pct": 59.981525,
+        "bytes": 32000000,
+        "sha256": "ebe76383b125c500c6697073e9c3a472afb206b5e0c410751ed2f5cb3f7bc8f9"
+      }
+    },
+    "2000_d70": {
+      "A": {
+        "file": "A_2000_d70.bin",
+        "n": 2000,
+        "density_pct": 70.0,
+        "seed": 2026010078140000,
+        "nnz": 2799317,
+        "actual_density_pct": 69.982925,
+        "bytes": 32000000,
+        "sha256": "2e81fbb04cf733c7c92f808bf4f90a1dc71e9aa41cdda218aa55474d2eea1691"
+      },
+      "B": {
+        "file": "B_2000_d70.bin",
+        "n": 2000,
+        "density_pct": 70.0,
+        "seed": 2026010078140001,
+        "nnz": 2800583,
+        "actual_density_pct": 70.014575,
+        "bytes": 32000000,
+        "sha256": "b038ce7e956f4337a0aa5f39589bfbccc69b9cb445e75d1d6e48707d4c7c00b7"
+      }
+    },
+    "2000_d85": {
+      "A": {
+        "file": "A_2000_d85.bin",
+        "n": 2000,
+        "density_pct": 85.0,
+        "seed": 2026010078170000,
+        "nnz": 3398437,
+        "actual_density_pct": 84.960925,
+        "bytes": 32000000,
+        "sha256": "9cb9553517da82c5ec2ed02eea16d4f63d371910547070a56e7bb9168a7af611"
+      },
+      "B": {
+        "file": "B_2000_d85.bin",
+        "n": 2000,
+        "density_pct": 85.0,
+        "seed": 2026010078170001,
+        "nnz": 3400314,
+        "actual_density_pct": 85.00785,
+        "bytes": 32000000,
+        "sha256": "75f507b7d699ef763d13e092f36efdf0370c7a6cd1cf1a447a5aed1b9756ceb5"
+      }
+    },
+    "2000_d100": {
+      "A": {
+        "file": "A_2000_d100.bin",
+        "n": 2000,
+        "density_pct": 100.0,
+        "seed": 2026010078200000,
+        "nnz": 4000000,
+        "actual_density_pct": 100.0,
+        "bytes": 32000000,
+        "sha256": "28bbcea00aa899b086f585f5f001b75f256554282361a877ae6ec5e02f3ac39e"
+      },
+      "B": {
+        "file": "B_2000_d100.bin",
+        "n": 2000,
+        "density_pct": 100.0,
+        "seed": 2026010078200001,
+        "nnz": 4000000,
+        "actual_density_pct": 100.0,
+        "bytes": 32000000,
+        "sha256": "a67adcdc56d0f4a3062fe64e2062d5a121ad9f7a3dd64e474c7a85569a8d7e60"
+      }
+    },
+    "4000_d0.1": {
+      "A": {
+        "file": "A_4000_d0.1.bin",
+        "n": 4000,
+        "density_pct": 0.1,
+        "seed": 2026014078000200,
+        "nnz": 16029,
+        "actual_density_pct": 0.10018125,
+        "bytes": 128000000,
+        "sha256": "f7ca9dbf10b81a7cf844075ebabeeca03df08e365499df9587231ec294ce20dc"
+      },
+      "B": {
+        "file": "B_4000_d0.1.bin",
+        "n": 4000,
+        "density_pct": 0.1,
+        "seed": 2026014078000201,
+        "nnz": 16068,
+        "actual_density_pct": 0.100425,
+        "bytes": 128000000,
+        "sha256": "bde90ffb6d2a2a2edf4aa0c77f4e7f223c3b796f67fcff468a74cb3a175a3d04"
+      }
+    },
+    "4000_d1": {
+      "A": {
+        "file": "A_4000_d1.bin",
+        "n": 4000,
+        "density_pct": 1.0,
+        "seed": 2026014078002000,
+        "nnz": 159986,
+        "actual_density_pct": 0.9999125,
+        "bytes": 128000000,
+        "sha256": "a72cd43f403f8d85c931f70d4a790b5247d3817f58c2e585e6dbd99d3b65bb7c"
+      },
+      "B": {
+        "file": "B_4000_d1.bin",
+        "n": 4000,
+        "density_pct": 1.0,
+        "seed": 2026014078002001,
+        "nnz": 159583,
+        "actual_density_pct": 0.99739375,
+        "bytes": 128000000,
+        "sha256": "a82f029489dbb1f4d47f913993269def2fd6a7e1f65634a70655eb48bf8d933a"
+      }
+    }
+  }
+}

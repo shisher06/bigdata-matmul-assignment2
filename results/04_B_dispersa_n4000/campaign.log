@@ -1,0 +1,34 @@
+Entorno documentado en results\04_B_dispersa_n4000/environment.json y environment.md
+== Tests de corrección (antes de medir) ==
+   Ran 24 tests in 3.465s
+   
+   OK
+== Datos de entrada ==
+  A_4000_d0.1.bin: generado (128.00 MB, nnz = 16029, densidad real 0.1002 %)
+  B_4000_d0.1.bin: generado (128.00 MB, nnz = 16068, densidad real 0.1004 %)
+  A_4000_d1.bin: generado (128.00 MB, nnz = 159986, densidad real 0.9999 %)
+  B_4000_d1.bin: generado (128.00 MB, nnz = 159583, densidad real 0.9974 %)
+== Campaña ==
+configs=['csr', 'blocked'] tamaños=[4000] densidades=[0.1, 1.0] reps=5 timeout=300s presupuesto memoria=4096MB
+csr          n=4000 d=0.1%    rep=1/5: OK      0.0023 s conv    39.83 ms  pico proceso   260.8 MB  nnz C 63693  (batch=40, verificado=yes)
+blocked      n=4000 d=0.1%    rep=1/5: OK     21.7070 s  pico proceso   388.5 MB  nnz C 63693  (batch=1, verificado=yes)
+blocked      n=4000 d=0.1%    rep=2/5: OK     22.4330 s  pico proceso   388.5 MB  nnz C 63693  (batch=1, verificado=checksum)
+csr          n=4000 d=0.1%    rep=2/5: OK      0.0021 s conv    40.76 ms  pico proceso   260.8 MB  nnz C 63693  (batch=41, verificado=checksum)
+csr          n=4000 d=0.1%    rep=3/5: OK      0.0021 s conv    43.23 ms  pico proceso   260.9 MB  nnz C 63693  (batch=38, verificado=checksum)
+blocked      n=4000 d=0.1%    rep=3/5: OK     21.9269 s  pico proceso   388.5 MB  nnz C 63693  (batch=1, verificado=checksum)
+blocked      n=4000 d=0.1%    rep=4/5: OK     21.7301 s  pico proceso   388.5 MB  nnz C 63693  (batch=1, verificado=checksum)
+csr          n=4000 d=0.1%    rep=4/5: OK      0.0021 s conv    39.45 ms  pico proceso   260.9 MB  nnz C 63693  (batch=40, verificado=checksum)
+csr          n=4000 d=0.1%    rep=5/5: OK      0.0022 s conv    42.35 ms  pico proceso   260.8 MB  nnz C 63693  (batch=38, verificado=checksum)
+blocked      n=4000 d=0.1%    rep=5/5: OK     21.8468 s  pico proceso   388.5 MB  nnz C 63693  (batch=1, verificado=checksum)
+csr          n=4000 d=1%      rep=1/5: OK      0.0913 s conv    45.74 ms  pico proceso   264.3 MB  nnz C 5263056  (batch=2, verificado=yes)
+blocked      n=4000 d=1%      rep=1/5: OK     21.6739 s  pico proceso   388.5 MB  nnz C 5263056  (batch=1, verificado=yes)
+blocked      n=4000 d=1%      rep=2/5: OK     21.6182 s  pico proceso   388.5 MB  nnz C 5263056  (batch=1, verificado=checksum)
+csr          n=4000 d=1%      rep=2/5: OK      0.0912 s conv    48.23 ms  pico proceso   264.3 MB  nnz C 5263056  (batch=2, verificado=checksum)
+csr          n=4000 d=1%      rep=3/5: OK      0.0939 s conv    46.90 ms  pico proceso   264.3 MB  nnz C 5263056  (batch=2, verificado=checksum)
+blocked      n=4000 d=1%      rep=3/5: OK     21.6060 s  pico proceso   388.5 MB  nnz C 5263056  (batch=1, verificado=checksum)
+blocked      n=4000 d=1%      rep=4/5: OK     21.6075 s  pico proceso   388.5 MB  nnz C 5263056  (batch=1, verificado=checksum)
+csr          n=4000 d=1%      rep=4/5: OK      0.0918 s conv    45.75 ms  pico proceso   264.3 MB  nnz C 5263056  (batch=2, verificado=checksum)
+csr          n=4000 d=1%      rep=5/5: OK      0.0924 s conv    46.25 ms  pico proceso   264.3 MB  nnz C 5263056  (batch=2, verificado=checksum)
+blocked      n=4000 d=1%      rep=5/5: OK     22.4264 s  pico proceso   388.5 MB  nnz C 5263056  (batch=1, verificado=checksum)
+Datos en bruto: results\04_B_dispersa_n4000\raw.csv
+Siguiente paso: python scripts/analyze.py --csv results\04_B_dispersa_n4000\raw.csv
