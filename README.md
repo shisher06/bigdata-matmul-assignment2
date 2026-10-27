@@ -2,6 +2,8 @@
 
 Big Data, Grado en Ciencia e Ingeniería de Datos (ULPGC), 2026-2027 - Guillermo Oltra Rodriguez.
 
+Repository: <https://github.com/shisher06/bigdata-matmul-assignment2>
+
 Empirical study in two parts, built on the validated C implementation of Assignment 1:
 
 - **Part A (dense optimisation):** the Assignment 1 triple loop `i-j-k` (baseline) against two
@@ -25,7 +27,7 @@ fill-in reduce that advantage?
 
 ## 0. What is reused from Assignment 1
 
-Assignment 1 repository: `bigdata-matmul-assignment1`, commit `e947d18` (2026-10-16), folder
+Assignment 1 repository: <https://github.com/shisher06/bigdata-matmul-assignment1>, commit `e947d18` (2026-10-16), folder
 `practica1/`. Everything below was **copied into this folder** (so this repository is
 self-contained) and changed only where stated.
 
