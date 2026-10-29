@@ -4,7 +4,7 @@
 **Big Data - Individual Assignment 2: Optimised matrix multiplication approaches and sparse matrices**<br>
 Grado en Ciencia e Ingeniería de Datos, Universidad de Las Palmas de Gran Canaria, 2026-2027<br>
 **Author:** Guillermo Oltra Rodriguez - **Date:** October 2026<br>
-**Materials:** GitHub repository <https://github.com/shisher06/bigdata-matmul-assignment2> (code, input configurations, raw measurements, analysis scripts; see `README.md` and Section 8). It reuses the validated C implementation and the input files of Assignment 1.
+**Materials:** GitHub repository <https://github.com/shisher06/bigdata-matmul-assignment2> (code, input configurations, raw measurements, analysis scripts; tag `assignment2-submission`; see `README.md` and Section 8). It reuses the validated C implementation and the input files of Assignment 1.
 </div>
 
 > **Abstract.** This study continues Assignment 1 (naive `i-j-k` matrix multiplication in C, Python and
@@ -672,7 +672,9 @@ https://gcc.gnu.org/onlinedocs/gcc-11.2.0/gcc/Optimize-Options.html (accessed Oc
 
 ## 8. Materials and reproducibility
 
-Everything can be regenerated from the repository <https://github.com/shisher06/bigdata-matmul-assignment2>.
+The code, input generation, raw measurements and analysis scripts are delivered through the public GitHub
+repository <https://github.com/shisher06/bigdata-matmul-assignment2> (submitted version: git tag
+`assignment2-submission`), and everything can be regenerated from it.
 `README.md` has the exact commands to build, run each campaign and make the tables and plots, the
 versions used and the list of what is reused from Assignment 1 (`bigdata-matmul-assignment1`, commit
 `e947d18`). For example, Part A is run with:
