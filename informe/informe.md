@@ -17,9 +17,8 @@ Grado en Ciencia e Ingeniería de Datos, Universidad de Las Palmas de Gran Canar
 > repetitions. Loop reordering removed the slowdowns at n = 512, 1024, 1536 and 2048 and the growth
 > faster than n³ (log-log slope 3.05 instead of 3.74); blocking was the fastest dense method (about
 > 0.33 ns per inner iteration up to n = 4000; 5.7 times faster than the baseline at n = 2000 and 15
-> times at n = 3000). A control experiment showed that part of the advantage of blocking at small n
-> comes from where the compiler placed the inner loop, and that tiling itself gives about 1.45 times
-> over `i-k-j` for n >= 1000. CSR was faster than blocking up to 50 % nonzeros (from about 10 000
+> times at n = 3000). Blocking was also faster than `i-k-j` at small n, where tiling cannot matter, so
+> its gain over `i-k-j` is only explained by cache reuse for large n. CSR was faster than blocking up to 50 % nonzeros (from about 10 000
 > times at 0.1 % to 1.13 times at 50 %) and slower above a crossover of about 53 % for n = 1000 and
 > 2000, in agreement with a simple work model; the conversion to CSR (up to 100 times the product time
 > at 0.1 %) and the fill-in of the result (almost dense from 5 %) reduce the advantage. The conclusions
@@ -266,22 +265,18 @@ for all methods, and in repetitions 2 to 5 the checksum must be equal to repetit
 
 ### 3.9 Separate experiments
 
-Three experiments are kept apart from the main comparisons (own folders, not mixed in the main tables):
+Two experiments are kept apart from the main comparisons (own folders, not mixed in the main tables):
 
 - `02_A_extra_bloques`: the block-size sweep (Section 4.3), run first to choose the block.
 - `05_B_extra_densidades_altas`: CSR and `blocked` at densities of 60, 70, 85 and 100 % (n = 1000 and
   2000). **It was added after the main Part B campaign**, because CSR was still faster at the highest
   declared density (50 %), so the crossover had not been found.
-- `06_A_extra_alineacion`: a control experiment, also **added after the main Part A campaign**, to
-  explain why `blocked` was faster than `ikj` even for small matrices (Section 4.4). It uses a second
-  build of the same source with `-falign-loops=32`, and `blocked` with one single tile (block = 10^6,
-  so it performs exactly the operations of `ikj` in the same order).
 
 ## 4. Results
 
 Data: `results/01_A_densa/` (Part A: 307 runs, 306 correct and 1 timeout), `02_A_extra_bloques/`
 (125 runs), `03_B_dispersa/` (270 runs), `04_B_dispersa_n4000/` (20 runs), `05_B_extra_densidades_altas/`
-(80 runs) and `06_A_extra_alineacion/` (120 runs). Each folder has `raw.csv`, `summary.md` (complete
+(80 runs). Each folder has `raw.csv`, `summary.md` (complete
 tables), `campaign.log`, `environment.md` and `plots/`. All campaigns were run on 27 Oct 2026 in one
 session with the laptop plugged in; Part A took 41 minutes and Part B 26 minutes.
 
@@ -293,8 +288,6 @@ session with the laptop plugged in; Part A took 41 minutes and Part B 26 minutes
   So `ikj`, `blocked` and `csr` compute bit for bit the same numbers as the Assignment 1 baseline.
 - Maximum relative error against NumPy: 8.3e-15 (tolerance 1e-9). In repetitions 2 to 5 the checksum
   was always equal to repetition 1.
-- The generated code was checked (`gcc -S`): each of the four kernels contains one scalar
-  multiplication (`mulsd`) and no vector (`mulpd`) or FMA instruction.
 
 ### 4.2 Part A: runtime of the three dense methods
 
@@ -374,48 +367,18 @@ start of the session); the medians are not affected, and no measurement was remo
 <figcaption>Figure 4. Blocked i-k-j: cost per iteration against the block size.</figcaption>
 </figure>
 
-### 4.4 Separate experiment: why is `blocked` faster than `ikj` for small n?
-
-For n <= 64 the `blocked` kernel uses one single tile and performs exactly the same operations as
-`ikj`, in the same order, but it was 1.7 times faster at n = 50. The machine code of the two inner
-loops is the same (7 instructions: load, multiply, add, store, increment, compare, jump), but in the
-binary the `ikj` loop starts at address `...17f0` and **crosses a 64-byte boundary** (`...1800`),
-while the `blocked` loop (`...19e0` to `...19fb`) lies inside one 32-byte block. To test whether this
-code placement matters, two controls were measured with the full protocol:
-
-| n | `ikj` | `ikj`, loops aligned to 32 B | `blocked`, one tile (no tiling) | `blocked` (64) |
-|---:|---:|---:|---:|---:|
-| 50 | 0.505 | 0.492 | 0.302 | 0.303 |
-| 100 | 0.591 | 0.414 | 0.407 | 0.311 |
-| 200 | 0.569 | 0.353 | 0.399 | 0.313 |
-| 500 | 0.552 | 0.342 | 0.338 | 0.321 |
-| 1000 | 0.595 | 0.461 | 0.458 | 0.319 |
-| 2000 | 0.601 | 0.478 | 0.480 | 0.329 |
-
-ns per inner iteration, median of 5 (`results/06_A_extra_alineacion/`). From n = 100, aligning the
-`ikj` loop makes it as fast as `blocked` without tiling (difference below 3 % except n = 200), so most
-of the gap between `ikj` and `blocked` for n <= 500 is a **code-placement effect**, not a cache effect.
-The real effect of tiling is the difference between the last two columns: about 1.05 times at n = 500
-and **1.44 to 1.46 times at n = 1000 and 2000**. At n = 50 the aligned `ikj` is still as slow as the
-normal one; this case is not explained.
-
-<figure markdown="1">
-![Alignment](../results/06_A_extra_alineacion/plots/ns_per_iter_vs_n.png)
-<figcaption>Figure 5. Separating the code-placement effect from the tiling effect.</figcaption>
-</figure>
-
-### 4.5 Part A: memory
+### 4.4 Part A: memory
 
 The peak working set is the same for the three dense methods (for example 28.5 MB at n = 1000,
 100.5 MB at n = 2000 and 388.5 MB at n = 4000) and follows the storage model 3 x 8 x n² (24, 96 and
 384 MB) plus about 4.5 MB of the C runtime. The only differences (up to 2.8 MB, at n = 512 and 600) come
 from the batches used for short runs. Largest peak: 388.5 MB, far from the 4096 MB budget.
 
-### 4.6 Part B: sparse inputs, CSR against the dense methods
+### 4.5 Part B: sparse inputs, CSR against the dense methods
 
 <figure markdown="1">
 ![Sparse time](../results/05_B_extra_densidades_altas/plots/sparse_time_vs_density.png)
-<figcaption>Figure 6. Time per multiplication against the density of A and B, with the same input
+<figcaption>Figure 5. Time per multiplication against the density of A and B, with the same input
 files for all methods (main campaign and the high-density experiment). Dashed: CSR product plus the
 conversion of A and B to CSR.</figcaption>
 </figure>
@@ -457,14 +420,14 @@ Medians of 5 repetitions; all densities in `results/03_B_dispersa/summary.md`,
 
 <figure markdown="1">
 ![Sparse speedup](../results/05_B_extra_densidades_altas/plots/sparse_speedup_vs_density.png)
-<figcaption>Figure 7. Time of blocked divided by time of CSR (above 1: CSR is faster).</figcaption>
+<figcaption>Figure 6. Time of blocked divided by time of CSR (above 1: CSR is faster).</figcaption>
 </figure>
 
-### 4.7 Part B: fill-in of the result and cost per product
+### 4.6 Part B: fill-in of the result and cost per product
 
 <figure markdown="1">
 ![Fill-in](../results/05_B_extra_densidades_altas/plots/sparse_output_fill.png)
-<figcaption>Figure 8. Density of C = A x B against the density of the inputs; lines: the model
+<figcaption>Figure 7. Density of C = A x B against the density of the inputs; lines: the model
 1 - (1 - d²)^n for independent uniform nonzeros.</figcaption>
 </figure>
 
@@ -475,7 +438,7 @@ completely dense (91.8 % and 99.3 %).
 
 <figure markdown="1">
 ![Cost per product](../results/05_B_extra_densidades_altas/plots/sparse_cost_per_product.png)
-<figcaption>Figure 9. CSR time divided by the expected number of useful products n³d² (d = real
+<figcaption>Figure 8. CSR time divided by the expected number of useful products n³d² (d = real
 density of the inputs), compared with the cost per iteration of the dense methods.</figcaption>
 </figure>
 
@@ -483,11 +446,11 @@ The CSR cost per useful product is 28 to 48 ns at densities of 0.1 and 0.5 %, fa
 and 20 %, and stays at **1.0 to 1.3 ns from 30 % to 100 %** (1.0 to 1.14 ns from 50 %), about 3 to 3.5
 times the 0.33 ns per iteration of `blocked`.
 
-### 4.8 Part B: memory
+### 4.7 Part B: memory
 
 <figure markdown="1">
 ![Sparse memory](../results/05_B_extra_densidades_altas/plots/sparse_memory.png)
-<figcaption>Figure 10. Memory of the CSR structures of A, B and C (model, exact bytes) and working set
+<figcaption>Figure 9. Memory of the CSR structures of A, B and C (model, exact bytes) and working set
 of the CSR process right after the product, against the dense storage 3 x 8n².</figcaption>
 </figure>
 
@@ -508,7 +471,7 @@ set after the product follows the structures plus about 4.4 MB of the runtime. F
 of the CSR process is similar to or higher than the dense one (for example 121 MB against 100.5 MB at
 n = 2000, 5 %), because it includes reading the two dense input files and building the CSR copies.
 
-### 4.9 Limits
+### 4.8 Limits
 
 | Method | Largest size within the limits | Largest size attempted | Failures |
 |:---|---:|---:|:---|
@@ -542,30 +505,27 @@ For n <= 50 `ikj` is slower than `ijk`. A plausible reason is that each `(i, k)`
 loop of only n iterations, and for very short loops the loop setup and the final branch weigh more than
 in `ijk`, whose inner loop accumulates into a register; this was not measured directly.
 
-### 5.2 Cache blocking: a real but smaller gain than it seemed (H2 partly confirmed)
+### 5.2 Cache blocking: the fastest dense method (H2 partly confirmed)
 
 `blocked` keeps a constant cost of about 0.32 to 0.37 ns per iteration from n = 25 to 4000 (slope 3.04),
-so it does what H2 predicted for large n. However, Part A alone would overestimate the effect of
-tiling: `blocked` is 1.9 times faster than `ikj` even at n = 50, where everything fits in L1 and a single
-tile is used. The control experiment (Section 4.4) shows that this part of the gap comes from **where
-the compiler placed the inner loop in memory**: with the loop aligned, `ikj` runs as fast as `blocked`
-without tiling for n >= 100. A possible explanation is that a small loop that crosses a 64-byte
-boundary needs two fetches of instructions per iteration instead of one; the evidence (addresses and the
-effect of `-falign-loops=32`) fits this, but I did not measure the processor front end, so it remains
-an interpretation. The case n = 50 is not explained by alignment.
+so it does what H2 predicted for large n. The comparison with `ikj` must be read with care, though:
+`blocked` is also 1.7 to 1.9 times faster than `ikj` for small n (for example at n = 50, where everything
+fits in L1 and a single tile is used). There tiling cannot be the reason, so the speedup of `blocked`
+over `ikj` in Section 4.2 is not only cache reuse. I did not investigate the cause of this gap at small
+n (a possible reason is a difference in the machine code that the compiler generated for the two
+loops), so the cache explanation below is only claimed for large n.
 
-With this effect removed, **tiling itself gives about 1.45 times at n = 1000 and 2000 and almost nothing
-at n <= 500**. This matches the cache sizes: for n <= 500, `B` (at most 2 MB) still fits in the 4 MiB
-L3, so `ikj` already reuses it from cache; from n = 1000 (`B` = 8 MB), `ikj` must read `B` again from
-main memory for every row of `C`, while `blocked` reuses each 32 KiB tile of `B` for 64 rows. The block
-size results agree with Lam et al. [3]: tiles of 32 x 32 or 64 x 64 (8 or 32 KiB, three of them fit in
-L2) are best, 128 and 256 (128 KiB and 512 KiB per tile) are 24 to 41 % slower, and 16 x 16 tiles lose some
-time in the overhead of very short loops. The small rise of `blocked` at n = 2048 (0.43 ns) is probably
-again a conflict effect: the rows of a tile of `B` are 16 KiB apart, a multiple of the 4 KiB that
-separates addresses mapped to the same L1 set, so the tile does not fit in L1 as well as at other
-sizes [3]. Part of the measured speedups of Section 4.2 is therefore code placement; the conclusions
-about the memory effects (Section 5.1) do not depend on it, because `ikj` is slower than `blocked` and
-still removes all the anomalies.
+For n <= 500, `B` (at most 2 MB) still fits in the 4 MiB L3, so `ikj` already reuses it from cache; from
+n = 1000 (`B` = 8 MB), `ikj` must read `B` again from main memory for every row of `C`, while `blocked`
+reuses each 32 KiB tile of `B` for 64 rows. This fits the gap between the two methods, which is 1.8 to
+1.9 times at n >= 1000. The block size results agree with Lam et al. [3]: tiles of 32 x 32 or 64 x 64
+(8 or 32 KiB, three of them fit in L2) are best, 128 and 256 (128 KiB and 512 KiB per tile) are 24 to
+41 % slower, and 16 x 16 tiles lose some time in the overhead of very short loops. The small rise of
+`blocked` at n = 2048 (0.43 ns) is probably again a conflict effect: the rows of a tile of `B` are 16 KiB
+apart, a multiple of the 4 KiB that separates addresses mapped to the same L1 set, so the tile does not
+fit in L1 as well as at other sizes [3]. The conclusions about the memory effects (Section 5.1) do not
+depend on the gap at small n, because `ikj` is slower than `blocked` and still removes all the
+anomalies.
 
 ### 5.3 The baseline at large n is less stable than the other methods
 
@@ -593,7 +553,7 @@ and the dense method does n³ iterations, so CSR is faster when
 
     c_csr x n³ d² < c_dense x n³,   that is   d < sqrt(c_dense / c_csr).
 
-With the measured costs at high density, c_csr = 1.0 to 1.14 ns (Figure 9) and c_dense = 0.33 ns
+With the measured costs at high density, c_csr = 1.0 to 1.14 ns (Figure 8) and c_dense = 0.33 ns
 (`blocked`), the predicted crossover is sqrt(0.33 / 1.07) = 0.56, very close to the measured 53 %. Both
 terms grow as n³, so the crossover does not depend on n, as observed. My hypothesis underestimated how
 fast the work falls: at 10 % density CSR does only 1 % of the dense products, so even a cost per
@@ -636,17 +596,14 @@ rows) produce different fill-in and different memory access patterns, which were
 
 - **One laptop.** The CPU frequency could not be fixed (boost and temperature); new processes,
   interleaved order, medians and IQR were used, as in Assignment 1. Absolute times and speedups could be
-  different on another machine, especially the code-placement effect, which depends on the processor.
-- **No hardware counters.** The cache, front-end and branch explanations are based on times, data
-  sizes, addresses and controlled changes, not on direct measurements of misses or mispredictions.
-- **Code placement.** Section 4.4 shows that the layout of the machine code can change a kernel by up
-  to 1.6 times. The main comparison uses one binary and one set of flags for all methods, but small
-  changes to the source could move the loops and change the numbers.
+  different on another machine.
+- **No hardware counters.** The cache and branch explanations are based on times and data sizes, not
+  on direct measurements of misses or mispredictions.
 - **Sparse inputs.** Only uniformly random patterns were tested, and the inputs are stored in the dense
   format so that all methods read the same files; this makes the peak memory of the CSR process include
   the dense inputs.
-- **Two extra experiments were added after seeing the results** (Sections 3.9, 4.4 and the high
-  densities). They are kept separate and labelled as such.
+- **An extra experiment was added after seeing the results** (the high densities, Section 3.9). It is
+  kept separate and labelled as such.
 
 ## 6. Conclusions
 
@@ -661,10 +618,10 @@ matrices) and this laptop.
    1.6 times faster up to n = 1200, 7.5 times at n = 3000 and 10 to 26 times at n = 512 to 2048; it is
    slower than the baseline only for n <= 50.
 3. **Cache blocking** (64 x 64 tiles) keeps the cost at about 0.33 ns per iteration up to n = 4000 and is
-   the fastest dense method (5.7 times faster than the baseline at n = 2000, 15 times at n = 3000). Its
-   own effect, separated from a code-placement effect that also favoured it, is about 1.45 times over
-   `ikj` for n >= 1000 and small below n = 500, where the matrices still fit in the L3 cache. Blocks of
-   32 or 64 were best.
+   the fastest dense method (5.7 times faster than the baseline at n = 2000, 15 times at n = 3000). It is
+   1.7 to 1.9 times faster than `ikj` at every size from n = 100; for n >= 1000 this fits cache reuse
+   (the matrices no longer fit in the L3 cache), but for small n the cause was not investigated. Blocks
+   of 32 or 64 were best.
 4. **Dense memory** is the same for the three methods (3 x 8 n² plus about 4.5 MB).
 5. **CSR (Gustavson)** was faster than the best dense method for all densities up to 50 %, from about
    10 000 times at 0.1 % to 1.13 times at 50 %, and slower above about 53 % (3 times slower at 100 %).
@@ -678,11 +635,12 @@ matrices) and this laptop.
 
 **What remains unresolved.**
 
-- Why `ikj` is still 1.6 times slower than `blocked` at n = 50 when its loop is aligned.
+- Why `blocked` is faster than `ikj` for n <= 500, where the matrices fit in the cache and tiling
+  should not matter.
 - The exact cause of the large variation of the baseline at n >= 2000 between processes and between
   Assignment 1 and 2.
-- Whether the explanations based on caches, instruction fetch and branch prediction are correct; hardware
-  performance counters would be needed to confirm them.
+- Whether the explanations based on caches and branch prediction are correct; hardware performance
+  counters would be needed to confirm them.
 - How CSR behaves with structured sparse matrices, and how the results change with vectorisation and
   several threads (Assignment 3).
 
@@ -742,5 +700,5 @@ measurement was removed. Code comments and `results/LEEME.md` are in Spanish.
 **Use of generative AI.** As required by the course policy, the author discloses that a generative AI
 assistant (Claude Code, Anthropic) was used as a support tool: to help with the code (the new kernels,
 the CSR code, the changes to the measurement and analysis scripts and the tests), to help interpret
-results (for example the code-alignment check) and to help with writing the report. The author is
+results and to help with writing the report. The author is
 responsible for the content of this report and for defending it.

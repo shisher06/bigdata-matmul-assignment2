@@ -54,12 +54,10 @@ STYLE = {
     "ikj": {"color": "#2a78d6", "marker": "o", "label": "ikj (loop order)"},
     "blocked": {"color": "#eb6834", "marker": "s", "label": "blocked ikj (64)"},
     "csr": {"color": "#6250d6", "marker": "D", "label": "CSR (Gustavson)"},
-    "ikj-align32": {"color": "#7fb3ea", "marker": "o", "label": "ikj, loops aligned to 32 B"},
-    "blocked-notile": {"color": "#f3a37f", "marker": "s", "label": "blocked, one tile (no tiling)"},
 }
 BLOCK_COLORS = ["#9ec5f0", "#5b9de0", "#2a78d6", "#1a4f99", "#0b2a57"]
 FALLBACK = {"color": "#e34948", "marker": "*"}
-ORDER = ["ijk", "ikj", "ikj-align32", "blocked-notile", "blocked", "csr"]
+ORDER = ["ijk", "ikj", "blocked", "csr"]
 
 NUM_FIELDS = [
     "repetition", "reps_planned", "time_ns", "batch", "convert_ns", "nnz_a", "nnz_b", "nnz_c",

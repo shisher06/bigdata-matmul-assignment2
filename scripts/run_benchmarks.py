@@ -24,9 +24,7 @@ en vez de tres lenguajes, varios MÉTODOS del mismo worker de C (``--method``)::
 Configuraciones (``--configs``)
     Principales: ``ijk`` (baseline = kernel de la Práctica 1), ``ikj``, ``blocked``
     (bloque ``BLOCK``) y ``csr``.
-    Experimentos aparte: elección del bloque (``blocked-16`` ... ``blocked-256``) y alineación
-    del código (``ikj-align32``: binario con -falign-loops=32; ``blocked-notile``: blocked con un
-    único bloque, es decir, las operaciones de ikj sin tiling).
+    Experimento aparte: elección del bloque (``blocked-16`` ... ``blocked-256``).
 
 Memoria
     * ``proc_peak_wset_bytes``: pico del working set del proceso completo durante toda su vida,
@@ -104,7 +102,6 @@ CSV_COLUMNS = [
 # de bloques (results/02_A_extra_bloques): 32 y 64 empatan; 128 y 256 son más lentos.
 BLOCK = 64
 BLOCK_SWEEP = [16, 32, 64, 128, 256]
-NO_TILE = 1_000_000  # bloque mayor que cualquier n: blocked sin tiling (un único bloque)
 MAIN_CONFIGS = ["ijk", "ikj", "blocked"]
 
 
@@ -120,13 +117,6 @@ def config_table() -> dict[str, dict]:
                     "cmd": [exe, "--method", "blocked", "--block", str(BLOCK)]},
         "csr": {"method": "csr", "block": 0, "cmd": [exe, "--method", "csr"]},
     }
-    # experimento aparte de alineación: ikj con los bucles alineados a 32 bytes, y blocked con un
-    # único bloque (bloque >= n: mismas operaciones y mismo orden que ikj, sin tiling)
-    aligned = str(build.c_binary("O2align32"))
-    table["ikj-align32"] = {"method": "ikj", "block": 0, "variant": "O2align32",
-                            "cmd": [aligned, "--method", "ikj"]}
-    table["blocked-notile"] = {"method": "blocked", "block": NO_TILE,
-                               "cmd": [exe, "--method", "blocked", "--block", str(NO_TILE)]}
     for bs in BLOCK_SWEEP:  # experimento aparte: tamaño de bloque
         table[f"blocked-{bs}"] = {"method": "blocked", "block": bs,
                                   "cmd": [exe, "--method", "blocked", "--block", str(bs)]}

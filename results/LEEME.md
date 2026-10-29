@@ -7,7 +7,6 @@
 | `03_B_dispersa` | **Parte B.** `csr`, `blocked` e `ijk` sobre matrices dispersas de `data_sparse/` con n = 1000 y 2000 y densidades 0.1, 0.5, 1, 2, 5, 10, 20, 30 y 50 %, 5 repeticiones. | **Resultados del informe (Parte B).** |
 | `04_B_dispersa_n4000` | Parte B con un tamaño mayor: `csr` y `blocked` con n = 4000 y densidades 0.1 y 1 %. | Tamaño mayor de la Parte B. |
 | `05_B_extra_densidades_altas` | Experimento aparte, **añadido después** de `03` porque csr seguía ganando al 50 %: `csr` y `blocked` con n = 1000 y 2000 y densidades 60, 70, 85 y 100 %. Su `summary.md` y `plots/` se generan con `03` + `05` juntos (todas las densidades). | Localiza el cruce csr = blocked (~53 %). Figuras de la Parte B del informe. |
-| `06_A_extra_alineacion` | Experimento aparte, **añadido después** de `01`: `ikj`, `ikj-align32` (mismo código compilado con `-falign-loops=32`), `blocked-notile` (un único bloque = operaciones de ikj sin tiling) y `blocked`, n = 50 a 2000. | Separa el efecto de la colocación del código del efecto del tiling (informe, apartado 4.4). |
 
 Cada carpeta tiene su `raw.csv` (medidas en bruto, una fila por proceso), `campaign.log` (salida de la
 campaña), `environment.md/.json` (máquina, versiones, flags) y, una vez analizada, `summary.csv`,
@@ -19,7 +18,6 @@ py -3.11 scripts/analyze.py --csv results/02_A_extra_bloques/raw.csv --out-dir r
 py -3.11 scripts/analyze.py --csv results/03_B_dispersa/raw.csv --out-dir results/03_B_dispersa
 py -3.11 scripts/analyze.py --csv results/04_B_dispersa_n4000/raw.csv --out-dir results/04_B_dispersa_n4000
 py -3.11 scripts/analyze.py --csv results/03_B_dispersa/raw.csv results/05_B_extra_densidades_altas/raw.csv --out-dir results/05_B_extra_densidades_altas
-py -3.11 scripts/analyze.py --csv results/06_A_extra_alineacion/raw.csv --out-dir results/06_A_extra_alineacion --kind dense
 ```
 
 Nota sobre `02_A_extra_bloques`: las dos primeras repeticiones de n = 500 (bloques 32 y 64) son más

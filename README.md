@@ -82,10 +82,6 @@ py -3.11 scripts/run_benchmarks.py --configs csr blocked --sizes 4000 --densitie
 py -3.11 scripts/run_benchmarks.py --configs csr blocked --sizes 1000 2000 --densities 60 70 85 100 \
     --out results/05_B_extra_densidades_altas/raw.csv
 
-# 4c) Separate experiment (added after Part A): code alignment vs tiling
-py -3.11 scripts/run_benchmarks.py --configs ikj ikj-align32 blocked-notile blocked \
-    --sizes 50 100 200 500 1000 2000 --out results/06_A_extra_alineacion/raw.csv
-
 # 5) Tables and plots
 py -3.11 scripts/analyze.py --csv results/01_A_densa/raw.csv --out-dir results/01_A_densa \
     --p1-summary ../practica1/results/04_comparativa_3_lenguajes/summary.csv
@@ -94,7 +90,6 @@ py -3.11 scripts/analyze.py --csv results/03_B_dispersa/raw.csv --out-dir result
 py -3.11 scripts/analyze.py --csv results/04_B_dispersa_n4000/raw.csv --out-dir results/04_B_dispersa_n4000
 py -3.11 scripts/analyze.py --csv results/03_B_dispersa/raw.csv results/05_B_extra_densidades_altas/raw.csv \
     --out-dir results/05_B_extra_densidades_altas          # Part B, all densities together
-py -3.11 scripts/analyze.py --csv results/06_A_extra_alineacion/raw.csv --out-dir results/06_A_extra_alineacion --kind dense
 
 # 6) PDF report (optional)
 py -3.11 informe/build_pdf.py
@@ -110,8 +105,7 @@ with the Assignment 1 measurement).
 Individual steps:
 
 ```bash
-py -3.11 scripts/build.py                          # builds build/c/matmul.exe (-O2) and the
-                                                   # alignment-experiment variant matmul_O2align32.exe
+py -3.11 scripts/build.py                          # builds build/c/matmul.exe (-O2)
 py -3.11 -m unittest discover -s tests -v          # 24 tests (worker, data, runner)
 py -3.11 src/python/datagen.py                     # dense inputs data/A_n.bin, data/B_n.bin
 py -3.11 src/python/datagen.py --sizes 1000 2000 --densities 0.1 0.5 1 2 5 10 20 30 50
@@ -163,9 +157,7 @@ practica2/
 | `blocked` | `matmul_blocked`, `--block 64` | dense row-major | `i-k-j` on 64 x 64 tiles so that the data reused by the inner loops stay in cache |
 | `csr` | `matmul_csr` (Gustavson) | CSR: `row_ptr` (int64), `col` (int32), `val` (float64) | only the nonzero products; dense accumulator row + column marker; output in CSR with sorted columns |
 
-Separate experiments only: `blocked-16` ... `blocked-256` (block size), `blocked-notile` (one single
-tile, i.e. the operations of `ikj` without tiling) and `ikj-align32` (same source built with
-`-O2 -falign-loops=32`, so that the inner loop does not cross a 32-byte boundary).
+Separate experiment only: `blocked-16` ... `blocked-256` (block size).
 
 All kernels and the CSR code are own code (no BLAS, no sparse library). **Every method adds the
 products of each `C[i][j]` in the same order (k increasing, starting from 0.0) and without FMA,
@@ -255,8 +247,6 @@ See [`results/LEEME.md`](results/LEEME.md) (Spanish) and the report. In short:
 - **Part A:** all methods give the same bits. `ikj` removes the Assignment 1 slowdowns at powers of two
   (slope 3.05 instead of 3.74); `blocked` is the fastest dense method (~0.33 ns per inner iteration up
   to n = 4000; 5.7x the baseline at n = 2000, 15x at n = 3000). The baseline times out at n = 4000.
-- **Alignment control:** part of the `blocked` vs `ikj` gap at small n is code placement; tiling itself
-  gives ~1.45x for n >= 1000.
 - **Part B:** CSR beats `blocked` up to 50 % density (from ~10 000x at 0.1 % to 1.13x at 50 %); the
   crossover is at ~53 % for n = 1000 and 2000. The conversion (up to 100x the product at 0.1 %) and the
   output fill-in (C almost dense from 5 %) reduce the advantage.

@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-27T16:34:54+00:00",
+  "timestamp_utc": "2026-10-29T11:49:28+00:00",
   "gcc": {
     "path": "C:\\MinGW\\bin\\gcc.EXE",
     "version": "gcc.EXE (GCC) 11.2.0",
@@ -10,11 +10,6 @@
       "binary": "build/c/matmul.exe",
       "flags": "-std=c11 -Wall -Wextra -ffp-contract=off -O2",
       "command": "gcc -std=c11 -Wall -Wextra -ffp-contract=off -O2 -DBUILD_FLAGS=\"-std=c11 -Wall -Wextra -ffp-contract=off -O2\" -o build/c/matmul.exe src/c/matmul.c -lpsapi"
-    },
-    "O2align32": {
-      "binary": "build/c/matmul_O2align32.exe",
-      "flags": "-std=c11 -Wall -Wextra -ffp-contract=off -O2 -falign-loops=32",
-      "command": "gcc -std=c11 -Wall -Wextra -ffp-contract=off -O2 -falign-loops=32 -DBUILD_FLAGS=\"-std=c11 -Wall -Wextra -ffp-contract=off -O2 -falign-loops=32\" -o build/c/matmul_O2align32.exe src/c/matmul.c -lpsapi"
     }
   }
 }

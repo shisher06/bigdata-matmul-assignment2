@@ -9,7 +9,6 @@ Salidas::
 
     build/c/matmul.exe            C -O2 (los cuatro métodos): la configuración de TODAS las
                                   comparaciones principales
-    build/c/matmul_O2align32.exe  C -O2 -falign-loops=32 (solo experimento aparte de alineación)
     build/build_info.json         versión exacta del compilador y flags usados
 
 ``-ffp-contract=off`` impide que GCC fusione ``C[i][j] += a * B[k][j]`` en una sola
@@ -41,9 +40,6 @@ C_COMMON = ["-std=c11", "-Wall", "-Wextra", "-ffp-contract=off"]
 # variante -> flags de optimización. "O2" es la configuración de la comparación principal.
 C_VARIANTS = {
     "O2": ["-O2"],
-    # Solo para el experimento aparte de alineación (results/06_A_extra_alineacion): mismo
-    # código y flags + -falign-loops=32 (cada bucle empieza en una dirección múltiplo de 32).
-    "O2align32": ["-O2", "-falign-loops=32"],
 }
 
 
